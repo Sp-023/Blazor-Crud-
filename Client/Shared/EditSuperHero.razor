@@ -1,0 +1,42 @@
+﻿@inject IMyHero_Service MyHero_Service
+@inject IJSRuntime JsRuntime
+
+<h3>EditSuperHero</h3>
+<EditForm Model="hero" OnSubmit="HandleSubmit">
+    <div class="form-group">
+        <label>FirstName</label>
+        <InputText @bind-Value="hero.FirstName" class="form-control"></InputText>
+
+    </div>
+    <div class="form-group">
+        <label>LastName</label>
+        <InputText @bind-Value="hero.LastName" class="form-control"></InputText>
+    </div>
+    <div class="form-group">
+        <label>HeroName</label>
+        <InputText @bind-Value="hero.HeroName" class="form-control"></InputText>
+    </div>
+    
+   
+
+    
+
+    <button class="btn btn-primary">Submit</button>
+
+</EditForm>
+    
+@code {
+    comic com { get; set; } = new comic();
+    public BlazorWebAssemblyApp.Shared.MyHeros hero { get; set; } = new BlazorWebAssemblyApp.Shared.MyHeros();
+    public int comicId = 1;
+
+    async void HandleSubmit()
+    {
+        Console.WriteLine("submit was called");
+        Console.WriteLine(hero.FirstName);
+
+        JsRuntime.InvokeVoidAsync("console log", hero);
+
+        await MyHero_Service.CreateSuperHero(hero);
+    }
+}
